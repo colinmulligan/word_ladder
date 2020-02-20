@@ -28,6 +28,8 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     Whenever it is impossible to generate a word ladder between the two words,
     the function returns `None`.
     '''
+    with open('words5.dict') as dictionary_file:
+        dictionary = dictionary_file.readlines()
     from collections import deque
     import copy
     S = []
@@ -35,9 +37,9 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     Q = deque()
     Q.append(S)
 
-    While len(Q) != 0:
+    while len(Q) != 0:
         Q.pop()
-        for word in dictionary_file:
+        for word in dictionary:
             if _adjacent(word, S[-1]):
                 if word == end_word:
                     S.append(word)
@@ -45,16 +47,18 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                 Scopy = copy.deepcopy(S)
                 Scopy.append(word)
                 Q.append(Scopy)
-                dictionary_file.pop(word)
-
+                dictionary.pop(word)
+   
 
 def verify_word_ladder(ladder):
     '''
     Returns True if each entry of the input list is adjacent to its neighbors;
     otherwise returns False.
     '''
-    if len(ladder) <= 1:
+    if len(ladder) == 0:
         return False
+    if len(ladder) == 1:
+        return True
     for k in range(len(ladder)-1):
         if not _adjacent(ladder[k], ladder[k+1]):
             return False
