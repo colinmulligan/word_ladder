@@ -35,20 +35,15 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     import copy
 
     S = []                   #create stack
-    print('test1', S)
     S.append(start_word)     #add start_word to stack
-    print('test2',S)
     Q = deque()             #create queue
-    print('test3',Q)
     Q.append(S)             #append stack to queue
-    print('test4',Q)
     
     new_dictionary = []     #create new dictionary to strip words of '\n'
     for word in dictionary: #for each word in old dictionary
         new_dictionary.append(word.strip('\n')) #strip each word of '\n' and add to new dictionary
     while len(Q) != 0:      #while queue is not empty
         t = Q.popleft()         #pop the leftmost stack from the queue
-        print('this one', Q)
         for word in new_dictionary:     #for each word in the new dictionary
             if _adjacent(word, t[-1]):  #if the dictionary word is adjacent to the last word in the popped stack
                 if word == end_word:    #if the dictionary word is also the end_word of the word ladder
@@ -57,11 +52,8 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                     return S_copy               #return the word ladder
                 S_copy2 = copy.deepcopy(t)      #if the dictionary word doesn't equal the end_word of the word ladder, make a copy of the popped stack
                 S_copy2.append(word)            #append the dictionary word to the 
-                print(S_copy2)
                 Q.append(S_copy2)
-                print(Q)
                 new_dictionary.remove(word)
-                print(S, Q)
 
 
 
