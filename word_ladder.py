@@ -51,7 +51,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
         print('this one', Q)
         for word in new_dictionary:
             if _adjacent(word, t[-1]):
-                if word == t[-1]:
+                if word == end_word:
                     S_copy = copy.deepcopy(t)
                     S_copy.append(word)
                     return S_copy
