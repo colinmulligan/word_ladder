@@ -34,11 +34,14 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
     from collections import deque
     import copy
 
+    if start_word == end_word:
+        return [start_word]
+
     S = []                   #create stack
     S.append(start_word)     #add start_word to stack
     Q = deque()             #create queue
     Q.append(S)             #append stack to queue
-    
+ 
     new_dictionary = []     #create new dictionary to strip words of '\n'
     for word in dictionary: #for each word in old dictionary
         new_dictionary.append(word.strip('\n')) #strip each word of '\n' and add to new dictionary
@@ -49,11 +52,14 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                 if word == end_word:    #if the dictionary word is also the end_word of the word ladder
                     S_copy = copy.deepcopy(t)   #make a copy of the popped stack
                     S_copy.append(word)         #append the dictionary word to the copy of the stack
+                    for i in range(1,len(t)-2):
+                        if _adjacent(S_copy[i-1],S_copy[i+1]):
+                            S_copy.pop(i)
                     return S_copy               #return the word ladder
                 S_copy2 = copy.deepcopy(t)      #if the dictionary word doesn't equal the end_word of the word ladder, make a copy of the popped stack
-                S_copy2.append(word)            #append the dictionary word to the 
-                Q.append(S_copy2)
-                new_dictionary.remove(word)
+                S_copy2.append(word)            #append the dictionary word to the stack copy
+                Q.append(S_copy2)               #append the stack copy to the queue
+                new_dictionary.remove(word)     #remove the dictionary word match from the dictionary then run while loop again
 
 
 
@@ -62,11 +68,11 @@ def verify_word_ladder(ladder):
     Returns True if each entry of the input list is adjacent to its neighbors;
     otherwise returns False.
     '''
-    if len(ladder) == 0:
-        return False
-    if len(ladder) == 1:
-        return True
-    for k in range(len(ladder)-1):
+    if len(ladder) == 0:                #if word ladder is empty
+        return False                    #return False because it's not a true word ladder
+    if len(ladder) == 1:                #if word ladder has one word
+        return True                     #return True
+    for k in range(len(ladder)-1):      #for each element in the 
         if not _adjacent(ladder[k], ladder[k+1]):
             return False
     return True
