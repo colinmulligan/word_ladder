@@ -52,7 +52,7 @@ def word_ladder(start_word, end_word, dictionary_file='words5.dict'):
                 if word == end_word:    #if the dictionary word is also the end_word of the word ladder
                     S_copy = copy.deepcopy(t)   #make a copy of the popped stack
                     S_copy.append(word)         #append the dictionary word to the copy of the stack
-                    for i in range(1,len(t)-2):
+                    for i in range(1,len(t)-1):
                         if _adjacent(S_copy[i-1],S_copy[i+1]):
                             S_copy.pop(i)
                     return S_copy               #return the word ladder
